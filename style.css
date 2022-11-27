@@ -10,13 +10,7 @@ body {
 }
 
 .calculator-body {
-  width: 90%;
-  height: auto;
-  max-height: 1020px;
-  margin: 0;
   padding: 0 2%;
-  max-width: 700px;
-  aspect-ratio: 5 / 8;
   border: solid 4px gray;
   border-radius: 8%/ 5%;
 }
@@ -44,7 +38,7 @@ body {
   margin: 5%;
   border-radius: 10%/16%;
   border: 2px solid grey;
-  font-size: 180%;
+  font-size: 80%;
 }
 
 .button .button:hover {
