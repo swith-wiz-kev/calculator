@@ -15,5 +15,5 @@ function divide(a, b) {
 }
 
 function mathOperation(a, b, operation) {
-  console.log(window[operation](a, b));
+  return window[operation](a, b);
 }
