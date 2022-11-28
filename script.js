@@ -21,8 +21,14 @@ function mathOperation(a, b, operation) {
 function updateDisplays() {
   // console.log("refresh");
 }
+
+function calculate() {}
+
 function updateNumber(num) {
-  console.log("before \n 1:", numberOne, " 2:", numberTwo);
+  if (whichNumber && !(queuedOperation == "equal")) {
+    whichNumber = !whichNumber;
+  }
+  console.log(numberOne, queuedOperation, numberTwo);
   let modifyNumber = whichNumber ? numberOne : numberTwo;
   const isNegative = modifyNumber.includes("-");
   const hasDecimal = modifyNumber.includes(".");
@@ -31,6 +37,12 @@ function updateNumber(num) {
     Math.abs(Number(modifyNumber)) < 10 &&
     modifyNumber.length <= 2 &&
     !hasDecimal;
+  if (oneDigit && isZero && !whichNumber && num == "delete") {
+    whichNumber = !whichNumber;
+    numberTwo = "0";
+    processOperation(num);
+    return;
+  }
   if (num == "plusminus") {
     if (isNegative) {
       modifyNumber = modifyNumber.slice(1);
@@ -55,20 +67,35 @@ function updateNumber(num) {
     modifyNumber = modifyNumber.concat(num);
   }
   whichNumber ? (numberOne = modifyNumber) : (numberTwo = modifyNumber);
-  console.log("after \n 1:", numberOne, " 2:", numberTwo);
+  console.log(numberOne, queuedOperation, numberTwo);
 }
+
 function processOperation(operation) {
-  // console.log(operation);
+  // pressing equal clears the queue
+  console.log(numberOne, queuedOperation, numberTwo);
+  if (operation == "delete") {
+    queuedOperation = "equal";
+  } else if (queuedOperation == "equal" || whichNumber) {
+    queuedOperation = operation;
+  } else {
+    calculate();
+    console.log("stop");
+    queuedOperation = operation;
+  }
+  console.log(numberOne, queuedOperation, numberTwo);
 }
+
 function inputProcessor(key) {
   const input = getCorrespondingInput(key);
   // console.log(input);
   switch (input[1]) {
     case "number":
       updateNumber(input[0]);
+      updateDisplays();
       break;
     case "operation":
       processOperation(input[0]);
+      updateDisplays();
       break;
     case "clear":
       displayTop = "0";
@@ -76,7 +103,7 @@ function inputProcessor(key) {
       numberOne = "0";
       numberTwo = "0";
       whichNumber = true; //true: on num1, false: on num2
-      positive = true;
+      queuedOperation = "equal";
       updateDisplays();
       break;
     case "doNothing":
@@ -96,7 +123,11 @@ function getCorrespondingInput(key) {
         return ["clear", "clear"];
       case "backspace":
       case "delete":
-        return ["delete", "number"];
+        if (queuedOperation == "equal" || !whichNumber) {
+          return ["delete", "number"];
+        } else {
+          return ["delete", "operation"];
+        }
       case "n":
         return ["plusminus", "number"];
       case "/":
@@ -160,7 +191,7 @@ let displayAns = "0";
 let numberOne = "0";
 let numberTwo = "0";
 let whichNumber = true; //true: on num1, false: on num2
-let positive = true;
+let queuedOperation = "equal";
 
 const allButton = document.querySelectorAll(".container .button");
 document.addEventListener("click", getInputKey);
