@@ -22,15 +22,24 @@ function updateDisplays() {
   const displayTopDiv = document.querySelector(".display.top");
   const displayBottomDiv = document.querySelector(".display.bottom");
   if (queuedOperation == "equal") {
-    displayTopDiv.textContent = numberOne;
-    displayBottomDiv.textContent = numberOne;
+    if (numberOne == "-0") {
+      displayTopDiv.textContent = "-";
+      displayBottomDiv.textContent = "-";
+    } else {
+      displayTopDiv.textContent = numberOne;
+      displayBottomDiv.textContent = numberOne;
+    }
   } else if (whichNumber) {
     const operation = wordToSymbol(queuedOperation);
     displayTopDiv.textContent = numberOne + operation;
     displayBottomDiv.textContent = numberOne;
   } else {
     const operation = wordToSymbol(queuedOperation);
-    displayTopDiv.textContent = numberOne + operation + numberTwo;
+    if (numberTwo == "-0") {
+      displayTopDiv.textContent = numberOne + operation + "-";
+    } else {
+      displayTopDiv.textContent = numberOne + operation + numberTwo;
+    }
     displayBottomDiv.textContent = numberOne;
   }
 }
@@ -108,7 +117,7 @@ function updateNumber(num) {
     modifyNumber.length <= 2 &&
     !hasDecimal;
   const digits = modifyNumber.length - isNegative - hasDecimal;
-  if (oneDigit && !whichNumber && num == "delete") {
+  if (oneDigit && isZero && !whichNumber && num == "delete") {
     whichNumber = !whichNumber;
     numberTwo = "0";
     return;
