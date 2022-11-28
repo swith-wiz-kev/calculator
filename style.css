@@ -64,3 +64,22 @@ body {
 .button .button:hover {
   background-color: #3a3a3a;
 }
+
+.button .button.operation {
+  background-color: rgb(95, 70, 6);
+}
+.button .button.operation:hover {
+  background-color: rgb(138, 101, 9);
+}
+.button .button.special {
+  background-color: rgb(18, 46, 5);
+}
+.button .button.special:hover {
+  background-color: rgb(46, 117, 13);
+}
+.button .button.blank {
+  border: 0px solid grey;
+}
+.button .button.blank:hover {
+  background-color: #000000;
+}

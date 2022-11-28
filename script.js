@@ -42,6 +42,9 @@ function updateDisplays() {
     }
     displayBottomDiv.textContent = numberOne;
   }
+  if (numberOne == "error") {
+    displayTopDiv.textContent = "press C to reset";
+  }
 }
 
 function wordToSymbol(operation) {
