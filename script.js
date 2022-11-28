@@ -262,13 +262,14 @@ function reportWindowSize() {
     responsiveDiv.style.height =
       Math.min(1020, (bodyWidth * 0.9 * 8) / 5) + "px";
     console.log("widthbased");
-    responsiveDiv.style.fontSize = (bodyWidth * 8 * 0.1) / 5 + "px";
+    responsiveDiv.style.fontSize =
+      (Math.min(700, bodyWidth) * 8 * 0.1) / 5 + "px";
   } else {
     responsiveDiv.style.width =
       Math.min(700, (bodyHeight * 0.9 * 5) / 8) + "px";
     responsiveDiv.style.height = Math.min(1020, bodyHeight * 0.9) + "px";
     console.log("heightbased");
-    responsiveDiv.style.fontSize = bodyHeight * 0.1 + "px";
+    responsiveDiv.style.fontSize = Math.min(1020, bodyHeight) * 0.1 + "px";
   }
 }
 
