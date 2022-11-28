@@ -18,6 +18,23 @@ function mathOperation(a, b, operation) {
   return window[operation](a, b);
 }
 
+function inputProcessor(key) {
+  getCorrespondingInput(key);
+}
+
+function getCorrespondingInput() {}
+
+function getInputKey(event) {
+  console.log(event);
+  if (event.type == "keydown") {
+    console.log(event.key);
+    inputProcessor(event.key);
+  } else if (event.type == "click") {
+    console.log(event.target.dataset.key);
+    inputProcessor(event.key);
+  }
+}
+
 function reportWindowSize() {
   const responsiveDiv = document.querySelector(".calculator-body");
 
@@ -39,5 +56,9 @@ function reportWindowSize() {
     responsiveDiv.style.fontSize = bodyHeight * 0.1 + "px";
   }
 }
+
+const allButton = document.querySelectorAll(".container .button");
+document.addEventListener("click", getInputKey);
+window.addEventListener("keydown", getInputKey);
 reportWindowSize();
 window.onresize = reportWindowSize;
