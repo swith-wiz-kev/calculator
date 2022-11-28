@@ -53,7 +53,7 @@ function numberTrim(num) {
   } else if (num < -999999999) {
     return -999999999;
   }
-  return num.toFixed(8);
+  return num.toFixed(8); //avoids the exponential notation
 }
 
 function stringTrim(num) {
@@ -65,17 +65,18 @@ function stringTrim(num) {
     newNum = num.slice(0, 9 + isNegative + hasDecimal);
   }
   for (let i = 0; i < 11; i++) {
+    //removes trailing decimal zeros
     if (newNum.includes(".")) {
-      const lastChar = newNum.slice(-1);
-      if (lastChar == "0") {
+      const trailingZeros = newNum.slice(-1);
+      if (trailingZeros == "0") {
         newNum = newNum.slice(0, -1);
-      } else if (lastChar == ".") {
+      } else if (trailingZeros == ".") {
         newNum = newNum.slice(0, -1);
         break;
       }
     }
   }
-  return Number(newNum) == 0 ? "0" : newNum;
+  return Number(newNum) == 0 ? "0" : newNum; //fixes negative 0
 }
 
 function calculate() {
@@ -138,7 +139,7 @@ function updateNumber(num) {
 }
 
 function processOperation(operation) {
-  // pressing equal clears the queue
+  // pressing equal clears the operation queue
   if (operation == "delete") {
     queuedOperation = "equal";
   } else if (queuedOperation == "equal" || whichNumber) {
