@@ -11,24 +11,64 @@ function multiply(a, b) {
 }
 
 function divide(a, b) {
-  return a / b;
+  return b == 0 ? "error" : a / b;
 }
 
 function mathOperation(a, b, operation) {
-  return window[operation](a, b);
+  return window[operation](Number(a), Number(b));
 }
 
 function updateDisplays() {
   // console.log("refresh");
 }
 
-function calculate() {}
+function numberTrim(num) {
+  if (num > 999999999) {
+    return 999999999;
+  } else if (num < -999999999) {
+    return -999999999;
+  }
+  return num.toFixed(8);
+}
+
+function stringTrim(num) {
+  const isNegative = num.includes("-");
+  const hasDecimal = num.includes(".");
+  const digits = num.length - isNegative - hasDecimal;
+  let newNum = num;
+  if (digits > 9) {
+    newNum = num.slice(0, 9 + isNegative + hasDecimal);
+  }
+  for (let i = 0; i < 11; i++) {
+    if (newNum.includes(".")) {
+      const lastChar = newNum.slice(-1);
+      if (lastChar == "0") {
+        newNum = newNum.slice(0, -1);
+      } else if (lastChar == ".") {
+        newNum = newNum.slice(0, -1);
+        break;
+      }
+    }
+  }
+  return newNum;
+}
+
+function calculate() {
+  numberOne = mathOperation(numberOne, numberTwo, queuedOperation);
+  if (numberOne == "error") {
+    return;
+  }
+  numberOne = numberTrim(numberOne).toString();
+  console.log(numberOne);
+  numberOne = stringTrim(numberOne);
+  numberTwo = "0";
+  whichNumber = !whichNumber;
+}
 
 function updateNumber(num) {
   if (whichNumber && !(queuedOperation == "equal")) {
     whichNumber = !whichNumber;
   }
-  console.log(numberOne, queuedOperation, numberTwo);
   let modifyNumber = whichNumber ? numberOne : numberTwo;
   const isNegative = modifyNumber.includes("-");
   const hasDecimal = modifyNumber.includes(".");
@@ -37,6 +77,7 @@ function updateNumber(num) {
     Math.abs(Number(modifyNumber)) < 10 &&
     modifyNumber.length <= 2 &&
     !hasDecimal;
+  const digits = modifyNumber.length - isNegative - hasDecimal;
   if (oneDigit && isZero && !whichNumber && num == "delete") {
     whichNumber = !whichNumber;
     numberTwo = "0";
@@ -63,6 +104,7 @@ function updateNumber(num) {
   } else if (oneDigit && isZero) {
     modifyNumber = modifyNumber.slice(0, -1);
     modifyNumber = modifyNumber.concat(num);
+  } else if (digits >= 9) {
   } else {
     modifyNumber = modifyNumber.concat(num);
   }
@@ -72,14 +114,12 @@ function updateNumber(num) {
 
 function processOperation(operation) {
   // pressing equal clears the queue
-  console.log(numberOne, queuedOperation, numberTwo);
   if (operation == "delete") {
     queuedOperation = "equal";
   } else if (queuedOperation == "equal" || whichNumber) {
     queuedOperation = operation;
   } else {
     calculate();
-    console.log("stop");
     queuedOperation = operation;
   }
   console.log(numberOne, queuedOperation, numberTwo);
@@ -90,12 +130,16 @@ function inputProcessor(key) {
   // console.log(input);
   switch (input[1]) {
     case "number":
-      updateNumber(input[0]);
-      updateDisplays();
+      if (numberOne != "error") {
+        updateNumber(input[0]);
+        updateDisplays();
+      }
       break;
     case "operation":
-      processOperation(input[0]);
-      updateDisplays();
+      if (numberOne != "error") {
+        processOperation(input[0]);
+        updateDisplays();
+      }
       break;
     case "clear":
       displayTop = "0";
@@ -104,6 +148,7 @@ function inputProcessor(key) {
       numberTwo = "0";
       whichNumber = true; //true: on num1, false: on num2
       queuedOperation = "equal";
+      console.log(numberOne, queuedOperation, numberTwo);
       updateDisplays();
       break;
     case "doNothing":
