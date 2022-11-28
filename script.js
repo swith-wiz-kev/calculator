@@ -19,7 +19,32 @@ function mathOperation(a, b, operation) {
 }
 
 function updateDisplays() {
-  // console.log("refresh");
+  const displayTopDiv = document.querySelector(".display.top");
+  const displayBottomDiv = document.querySelector(".display.bottom");
+  if (queuedOperation == "equal") {
+    displayTopDiv.textContent = numberOne;
+    displayBottomDiv.textContent = numberOne;
+  } else {
+    const operation = wordToSymbol(queuedOperation);
+    displayTopDiv.textContent = numberOne + operation + numberTwo;
+    displayBottomDiv.textContent = numberOne;
+  }
+}
+
+function wordToSymbol(operation) {
+  switch (operation) {
+    case "add":
+      return " + ";
+    case "subtract":
+      return " - ";
+    case "multiply":
+      return " × ";
+    case "divide":
+      return " ÷ ";
+
+    default:
+      break;
+  }
 }
 
 function numberTrim(num) {
@@ -50,7 +75,7 @@ function stringTrim(num) {
       }
     }
   }
-  return newNum;
+  return Number(newNum) == 0 ? "0" : newNum;
 }
 
 function calculate() {
