@@ -18,53 +18,81 @@ function mathOperation(a, b, operation) {
   return window[operation](a, b);
 }
 
+function updateDisplays() {
+  console.log("refresh");
+}
+function updateNumber(num) {
+  console.log(num);
+}
+function processOperation(operation) {
+  console.log(operation);
+}
 function inputProcessor(key) {
   const input = getCorrespondingInput(key);
-  console.log(input);
+  // console.log(input);
+  if (typeof input[1] == "string") {
+    switch (input[1]) {
+      case "number":
+        updateNumber(input[0]);
+        break;
+      case "operation":
+        processOperation(input[0]);
+        break;
+      case "clear":
+        displayTop = "";
+        displayAns = "";
+        numberOne = 0;
+        numberTwo = 0;
+        whichNumber = true; //true: on num1, false: on num2
+        positive = true;
+        updateDisplays();
+        break;
+      case "doNothing":
+        break;
+      default:
+        break;
+    }
+  }
 }
 
 function getCorrespondingInput(key) {
   if (key >= 0 || key <= 9) {
-    // console.log(typeof key, key);
-    // console.log(typeof Number(key), Number(key));
-    return [Number(key), "number"];
+    return [key, "number"];
   } else {
-    if (typeof key == "string") {
-      const lowercaseKey = key.toLowerCase();
-      switch (lowercaseKey) {
-        case "escape":
-          return ["clear", "special"];
-        case "backspace":
-        case "delete":
-          return ["delete", "special"];
-        case "n":
-          return ["plusminus", "special"];
-        case "/":
-        case "d":
-          return ["divide", "operation"];
-        case "*":
-        case "x":
-          return ["multiply", "operation"];
-        case "-":
-        case "s":
-          return ["subtract", "operation"];
-        case "+":
-        case "a":
-          return ["add", "operation"];
-        case "=":
-        case "enter":
-          return ["equal", "special"];
-        case ".":
-          return ["decimal", "special"];
-        default:
-          break;
-      }
+    const lowercaseKey = !key || key.toLowerCase();
+    switch (lowercaseKey) {
+      case "escape":
+        return ["clear", "clear"];
+      case "backspace":
+      case "delete":
+        return ["delete", "number"];
+      case "n":
+        return ["plusminus", "number"];
+      case "/":
+      case "d":
+        return ["divide", "operation"];
+      case "*":
+      case "x":
+        return ["multiply", "operation"];
+      case "-":
+      case "s":
+        return ["subtract", "operation"];
+      case "+":
+      case "a":
+        return ["add", "operation"];
+      case "=":
+      case "enter":
+        return ["equal", "operation"];
+      case ".":
+        return ["decimal", "number"];
+      default:
+        return [" ", "doNothing"];
     }
   }
 }
 
 function getInputKey(event) {
-  console.log(event);
+  // console.log(event);
   if (event.type == "keydown") {
     // console.log(event.key);
     inputProcessor(event.key);
@@ -96,8 +124,16 @@ function reportWindowSize() {
   }
 }
 
+let displayTop = "";
+let displayAns = "";
+let numberOne = 0;
+let numberTwo = 0;
+let whichNumber = true; //true: on num1, false: on num2
+let positive = true;
+
 const allButton = document.querySelectorAll(".container .button");
 document.addEventListener("click", getInputKey);
 window.addEventListener("keydown", getInputKey);
+
 reportWindowSize();
 window.onresize = reportWindowSize;
