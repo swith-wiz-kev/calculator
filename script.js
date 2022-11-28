@@ -18,11 +18,30 @@ function mathOperation(a, b, operation) {
   return window[operation](a, b);
 }
 
-function inputProcessor(key) {
-  getCorrespondingInput(key);
-}
+// function inputProcessor(key) {
+//   getCorrespondingInput(key);
+// }
 
-function getCorrespondingInput() {}
+// function getCorrespondingInput(key) {
+//   switch (key) {
+//     case value:
+//       break;
+//     case value:
+//       break;
+//     case value:
+//       break;
+//     case value:
+//       break;
+//     case value:
+//       break;
+//     case value:
+//       break;
+//     case value:
+//       break;
+//     default:
+//       break;
+//   }
+// }
 
 function getInputKey(event) {
   console.log(event);
@@ -31,7 +50,7 @@ function getInputKey(event) {
     inputProcessor(event.key);
   } else if (event.type == "click") {
     console.log(event.target.dataset.key);
-    inputProcessor(event.key);
+    inputProcessor(event.target.dataset.key);
   }
 }
 
