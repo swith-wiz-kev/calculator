@@ -24,6 +24,10 @@ function updateDisplays() {
   if (queuedOperation == "equal") {
     displayTopDiv.textContent = numberOne;
     displayBottomDiv.textContent = numberOne;
+  } else if (whichNumber) {
+    const operation = wordToSymbol(queuedOperation);
+    displayTopDiv.textContent = numberOne + operation;
+    displayBottomDiv.textContent = numberOne;
   } else {
     const operation = wordToSymbol(queuedOperation);
     displayTopDiv.textContent = numberOne + operation + numberTwo;
@@ -104,10 +108,9 @@ function updateNumber(num) {
     modifyNumber.length <= 2 &&
     !hasDecimal;
   const digits = modifyNumber.length - isNegative - hasDecimal;
-  if (oneDigit && isZero && !whichNumber && num == "delete") {
+  if (oneDigit && !whichNumber && num == "delete") {
     whichNumber = !whichNumber;
     numberTwo = "0";
-    processOperation(num);
     return;
   }
   if (num == "plusminus") {
