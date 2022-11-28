@@ -43,11 +43,73 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+.gridclr {
+  grid-area: gridclr;
+}
+.gridpm {
+  grid-area: gridpm;
+}
+.gridbck {
+  grid-area: gridbck;
+}
+.griddiv {
+  grid-area: griddiv;
+}
+.grid7 {
+  grid-area: grid7;
+}
+.grid8 {
+  grid-area: grid8;
+}
+.grid9 {
+  grid-area: grid9;
+}
+.gridx {
+  grid-area: gridx;
+}
+.grid4 {
+  grid-area: grid4;
+}
+.grid5 {
+  grid-area: grid5;
+}
+.grid6 {
+  grid-area: grid6;
+}
+.gridm {
+  grid-area: gridm;
+}
+.grid1 {
+  grid-area: grid1;
+}
+.grid2 {
+  grid-area: grid2;
+}
+.grid3 {
+  grid-area: grid3;
+}
+.gridp {
+  grid-area: gridp;
+}
+.grid0 {
+  grid-area: grid0;
+}
+.griddec {
+  grid-area: griddec;
+}
+.gride {
+  grid-area: gride;
+}
 .button.container {
   height: 65%;
   margin-bottom: 5%;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-areas:
+    "gridclr gridpm gridbck griddiv"
+    "grid7 grid8 grid9 gridx"
+    "grid4 grid5 grid6 gridm"
+    "grid1 grid2 grid3 gridp"
+    "grid0 grid0 griddec gride";
 }
 
 .button .button {
@@ -56,11 +118,15 @@ body {
   align-items: center;
   justify-content: center;
   margin: 5%;
-  border-radius: 10.35%/12.03%;
+  border-radius: 9.12%/12.03%;
   border: 2px solid grey;
   font-size: 80%;
 }
 
+.button .button.grid0 {
+  border-radius: 5.55%/15%;
+  margin: 2.5%;
+}
 .button .button:hover {
   background-color: #3a3a3a;
 }
@@ -71,15 +137,10 @@ body {
 .button .button.operation:hover {
   background-color: rgb(138, 101, 9);
 }
+
 .button .button.special {
   background-color: rgb(18, 46, 5);
 }
 .button .button.special:hover {
   background-color: rgb(46, 117, 13);
-}
-.button .button.blank {
-  border: 0px solid grey;
-}
-.button .button.blank:hover {
-  background-color: #000000;
 }
