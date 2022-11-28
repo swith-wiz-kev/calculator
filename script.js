@@ -18,38 +18,58 @@ function mathOperation(a, b, operation) {
   return window[operation](a, b);
 }
 
-// function inputProcessor(key) {
-//   getCorrespondingInput(key);
-// }
+function inputProcessor(key) {
+  const input = getCorrespondingInput(key);
+  console.log(input);
+}
 
-// function getCorrespondingInput(key) {
-//   switch (key) {
-//     case value:
-//       break;
-//     case value:
-//       break;
-//     case value:
-//       break;
-//     case value:
-//       break;
-//     case value:
-//       break;
-//     case value:
-//       break;
-//     case value:
-//       break;
-//     default:
-//       break;
-//   }
-// }
+function getCorrespondingInput(key) {
+  if (key >= 0 || key <= 9) {
+    // console.log(typeof key, key);
+    // console.log(typeof Number(key), Number(key));
+    return [Number(key), "number"];
+  } else {
+    if (typeof key == "string") {
+      const lowercaseKey = key.toLowerCase();
+      switch (lowercaseKey) {
+        case "escape":
+          return ["clear", "special"];
+        case "backspace":
+        case "delete":
+          return ["delete", "special"];
+        case "n":
+          return ["plusminus", "special"];
+        case "/":
+        case "d":
+          return ["divide", "operation"];
+        case "*":
+        case "x":
+          return ["multiply", "operation"];
+        case "-":
+        case "s":
+          return ["subtract", "operation"];
+        case "+":
+        case "a":
+          return ["add", "operation"];
+        case "=":
+        case "enter":
+          return ["equal", "special"];
+        case ".":
+          return ["decimal", "special"];
+        default:
+          break;
+      }
+    }
+  }
+}
 
 function getInputKey(event) {
   console.log(event);
   if (event.type == "keydown") {
-    console.log(event.key);
+    // console.log(event.key);
     inputProcessor(event.key);
   } else if (event.type == "click") {
-    console.log(event.target.dataset.key);
+    // console.log(event.target.dataset.key);
     inputProcessor(event.target.dataset.key);
   }
 }
