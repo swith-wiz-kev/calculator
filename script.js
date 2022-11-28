@@ -19,39 +19,70 @@ function mathOperation(a, b, operation) {
 }
 
 function updateDisplays() {
-  console.log("refresh");
+  // console.log("refresh");
 }
 function updateNumber(num) {
-  console.log(num);
+  console.log("before \n 1:", numberOne, " 2:", numberTwo);
+  let modifyNumber = whichNumber ? numberOne : numberTwo;
+  const isNegative = modifyNumber.includes("-");
+  const hasDecimal = modifyNumber.includes(".");
+  const isZero = Number(modifyNumber) == 0;
+  const oneDigit =
+    Math.abs(Number(modifyNumber)) < 10 &&
+    modifyNumber.length <= 2 &&
+    !hasDecimal;
+  if (num == "plusminus") {
+    if (isNegative) {
+      modifyNumber = modifyNumber.slice(1);
+    } else {
+      modifyNumber = "-".concat(modifyNumber);
+    }
+  } else if (num == ".") {
+    if (!hasDecimal) {
+      modifyNumber = modifyNumber.concat(num);
+    }
+  } else if (num == "delete") {
+    if (oneDigit) {
+      modifyNumber = modifyNumber.slice(0, -1);
+      modifyNumber = modifyNumber.concat("0");
+    } else {
+      modifyNumber = modifyNumber.slice(0, -1);
+    }
+  } else if (oneDigit && isZero) {
+    modifyNumber = modifyNumber.slice(0, -1);
+    modifyNumber = modifyNumber.concat(num);
+  } else {
+    modifyNumber = modifyNumber.concat(num);
+  }
+  whichNumber ? (numberOne = modifyNumber) : (numberTwo = modifyNumber);
+  console.log("after \n 1:", numberOne, " 2:", numberTwo);
 }
 function processOperation(operation) {
-  console.log(operation);
+  // console.log(operation);
 }
 function inputProcessor(key) {
   const input = getCorrespondingInput(key);
   // console.log(input);
-  if (typeof input[1] == "string") {
-    switch (input[1]) {
-      case "number":
-        updateNumber(input[0]);
-        break;
-      case "operation":
-        processOperation(input[0]);
-        break;
-      case "clear":
-        displayTop = "";
-        displayAns = "";
-        numberOne = 0;
-        numberTwo = 0;
-        whichNumber = true; //true: on num1, false: on num2
-        positive = true;
-        updateDisplays();
-        break;
-      case "doNothing":
-        break;
-      default:
-        break;
-    }
+  switch (input[1]) {
+    case "number":
+      updateNumber(input[0]);
+      break;
+    case "operation":
+      processOperation(input[0]);
+      break;
+    case "clear":
+      displayTop = "0";
+      displayAns = "0";
+      numberOne = "0";
+      numberTwo = "0";
+      whichNumber = true; //true: on num1, false: on num2
+      positive = true;
+      updateDisplays();
+      break;
+    case "doNothing":
+      break;
+    default:
+      break;
   }
 }
 
@@ -84,7 +115,7 @@ function getCorrespondingInput(key) {
       case "enter":
         return ["equal", "operation"];
       case ".":
-        return ["decimal", "number"];
+        return [".", "number"];
       default:
         return [" ", "doNothing"];
     }
@@ -124,10 +155,10 @@ function reportWindowSize() {
   }
 }
 
-let displayTop = "";
-let displayAns = "";
-let numberOne = 0;
-let numberTwo = 0;
+let displayTop = "0";
+let displayAns = "0";
+let numberOne = "0";
+let numberTwo = "0";
 let whichNumber = true; //true: on num1, false: on num2
 let positive = true;
 
