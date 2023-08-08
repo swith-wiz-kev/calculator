@@ -56,10 +56,13 @@ body {
   margin-bottom: 5%;
   display: grid;
   color: white;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
 }
 
 .button .button {
   font-family: "Courier New", Courier, monospace;
+  overflow: visible;
   display: flex;
   align-items: center;
   justify-content: center;
