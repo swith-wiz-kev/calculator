@@ -32,6 +32,7 @@ body {
   white-space: nowrap;
   overflow: hidden;
   font-family: Arial, Helvetica, sans-serif;
+  color: white;
 }
 
 .display.bottom {
@@ -41,6 +42,7 @@ body {
   justify-content: right;
   display: flex;
   font-family: Arial, Helvetica, sans-serif;
+  color: white;
 }
 
 .gridequalsign {
@@ -53,6 +55,7 @@ body {
   height: 65%;
   margin-bottom: 5%;
   display: grid;
+  color: white;
 }
 
 .button .button {
